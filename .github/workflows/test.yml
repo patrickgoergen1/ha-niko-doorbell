@@ -13,9 +13,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install Home Assistant + test dependencies
-        run: |
-          pip install homeassistant
-          pip install -r requirements_test.txt
+      - name: Install test dependencies
+        run: pip install -r requirements_test.txt
       - name: Run tests
         run: pytest tests/
