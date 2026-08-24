@@ -4,7 +4,7 @@
   "codeowners": ["@patrickgoergen1"],
   "config_flow": true,
   "documentation": "https://github.com/patrickgoergen1/ha-niko-doorbell",
-  "issue_tracker": "https://github.com/patrickgoergen1/ha-niko-doorbell/issues",
   "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/patrickgoergen1/ha-niko-doorbell/issues",
   "version": "0.1.0"
 }
