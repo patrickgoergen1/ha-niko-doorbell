@@ -1,0 +1,60 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Niko Doorbell",
+        "description": "Enter the local network details of your Niko Doorbell (NHC1).",
+        "data": {
+          "host": "Host or IP address",
+          "port": "REST API port",
+          "username": "Username (optional)",
+          "password": "Password (optional)",
+          "rtsp_port": "RTSP port",
+          "stream_path": "RTSP stream path",
+          "verify_ssl": "Verify SSL certificate"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the doorbell. Check the host and port.",
+      "invalid_auth": "Invalid username or password.",
+      "unknown": "Unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This doorbell is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "call_status": {
+        "name": "Call status",
+        "state": {
+          "idle": "Idle",
+          "ringing": "Ringing"
+        }
+      },
+      "mute_status": {
+        "name": "Mute status",
+        "state": {
+          "muted": "Muted",
+          "unmuted": "Unmuted"
+        }
+      }
+    },
+    "switch": {
+      "mute": {
+        "name": "Mute"
+      }
+    },
+    "button": {
+      "hangup": {
+        "name": "Hang up"
+      }
+    },
+    "camera": {
+      "doorbell_camera": {
+        "name": "Camera"
+      }
+    }
+  }
+}
