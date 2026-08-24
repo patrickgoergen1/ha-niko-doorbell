@@ -10,6 +10,7 @@ from homeassistant.data_entry_flow import FlowResultType
 from custom_components.niko_doorbell.api import (
     NikoDoorbellApiError,
     NikoDoorbellAuthError,
+    NikoDoorbellStatus,
 )
 from custom_components.niko_doorbell.const import DOMAIN
 
@@ -29,13 +30,24 @@ async def test_user_flow_success(hass):
     )
     assert result["type"] == FlowResultType.FORM
 
-    with patch(
-        "custom_components.niko_doorbell.config_flow.NikoDoorbellApiClient.async_test_connection",
-        new=AsyncMock(return_value=None),
+    # The config flow only calls async_test_connection, but creating the
+    # entry also triggers a real integration setup in the background (via
+    # the coordinator's first refresh), so async_get_status needs mocking
+    # too or it will try to open a real socket.
+    with (
+        patch(
+            "custom_components.niko_doorbell.config_flow.NikoDoorbellApiClient.async_test_connection",
+            new=AsyncMock(return_value=None),
+        ),
+        patch(
+            "custom_components.niko_doorbell.api.NikoDoorbellApiClient.async_get_status",
+            new=AsyncMock(return_value=NikoDoorbellStatus(call_active=False, muted=False)),
+        ),
     ):
         result = await hass.config_entries.flow.async_configure(
             result["flow_id"], USER_INPUT
         )
+        await hass.async_block_till_done()
 
     assert result["type"] == FlowResultType.CREATE_ENTRY
     assert result["title"] == "Niko Doorbell (1.2.3.4)"
